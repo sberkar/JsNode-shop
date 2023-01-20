@@ -1,0 +1,16 @@
+<%- include("includes/head.ejs") %>
+</head>
+<body>
+    <%- include("includes/navbar.ejs") %>
+    <% if(usersData.length > 0){ %>
+        <% for(let i=0; i < usersData.length; i++) { %>
+            <% console.log(usersData[i]) %>
+            <div>
+                <span><%= usersData[i].username %></span>
+                <h2><%= usersData[i].name %></h2>
+            </div>
+        <% } %>
+    <% } else { %>
+        <div>Sorry, No User Found!</div>
+    <% } %>
+<%- include("includes/end.ejs") %>

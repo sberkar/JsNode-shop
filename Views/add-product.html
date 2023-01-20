@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Add Product</title>
+        <link rel="stylesheet" href="/css/index.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <header class="py-6 bg-sky-500/100">
+            <nav class="flex justify-center ">
+                <ul class="flex">
+                    <li class="mr-4">
+                        <a href="/" class="text-white">Shop Page</a>
+                    </li>
+                    <li>
+                        <a href="/admin/add-product" class="text-white">Add Product</a>
+                    </li>
+                </ul>          
+            </nav>
+        </header>
+        <main class="px-[50px] mt-8  ">
+            <h2 class="font-bold text-2xl">Add Product Page</h2>
+            <form class="mt-4" action='/admin/add-product' method='POST'>
+                <input class="border border-black " type='text' placeholder='Enter The Book Title' name='title' />
+                <input type='submit' class="border border-black" value='add' />
+            </form>
+        </main>
+    </body>
+</html>
