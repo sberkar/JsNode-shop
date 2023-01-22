@@ -1,0 +1,60 @@
+<%- include("../includes/head.ejs") %>
+    </head>
+    <body>
+        <%- include("../includes/nav.ejs") %>
+        <div class="px-[100px] hero flex items-center">
+            <div class="w-1/2 px-10">
+                <h1 class="text-4xl font-bold">Your One-Stop Shop<br>for All Your <span class="text-[#ff0e36]">Need.</span></h1>
+                <p class="my-4">JsNode is the premier destination for luxury shopping online. Offering a curated selection of premium and high-end products, JsNode is the perfect place to find the most exclusive and sought-after items.</p>
+                <a href="#" class="py-2 px-6 rounded-md text-white bg-[#ff0e36]">Explore Products</a>
+            </div>
+            <img src="https://cdn.dribbble.com/users/1170793/screenshots/6018665/ecommerce-illustration_4x.png" alt="hero cover" class="w-1/2">
+        </div>
+        <div class="flex justify-between mt-6 items-center px-[100px]">
+            <h2 class="text-2xl">Products</h2>
+            <a href="#" class="p-1 border border-slate-300 rounded-xl">More</a>
+        </div>
+        <div class="grid px-[100px] mt-4 grid-cols-5 gap-4">
+        <% if (prods.length > 0) { %>
+            <% if (prods.length <= 5) { %>
+                <% for(let i = 0; i < prods.length; i++) { %>
+                    <div class="border border-slate-400 rounded p-4">
+                        <div class="flex justify-center">
+                        <img class="w-auto h-[145px]" width="600" heigth="300" src="<%= prods[i].image %>" alt="Product Image">
+                    </div>
+                    <h2 class="text-xl font-bold">
+                        <%= prods[i].title %>
+                    </h2>
+                    <span class="">
+                        ₹ <%= prods[i].price %>
+                    </span>
+                    <p class="text-[#604b58] mb-4"><%= prods[i].desc %></p>
+                    <a href="#" class="text-white bg-[#ff0e36] rounded py-2 px-4">
+                        View Details
+                    </a>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <% for(let i = 0; i < 5; i++) { %>
+                    <div>
+                        <div class="">
+                        <img class="w-full " src="<%= prods[i].image %>" alt="Product Image">
+                    </div>
+                    <h2 class="text-xl">
+                        <%= prods[i].title %>
+                    </h2>
+                    <span>
+                        Rs <%= prods[i].price %>
+                    </span>
+                    <p><%= prods[i].desc %></p>
+                    </div>
+                <% } %>
+            <% } %>
+        <% } else { %>
+            <div>
+                <h1>No Product Found</h1>
+            </div>
+        <% } %>
+        </div>
+
+<%- include("../includes/end.ejs") %>

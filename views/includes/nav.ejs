@@ -1,0 +1,20 @@
+<header>
+    <nav class="flex py-6 items-center">
+        <div class="logo w-[25%] pl-[100px]">
+            <a class="text-3xl logo-text font-bold" href="/">JsNode.</a>
+        </div>
+        <div class="menu-items w-[40%] mx-[10%] flex justify-evenly">
+            <div class="<%= path === '/products'?'nav-active':'' %>"><a href="/products">Product</a></div>
+            <div class="<%= path === '/blog'?'nav-active':'' %>""><a href="/blog">Blog</a></div>
+            <div class="<%= path === '/careers'?'nav-active':'' %>""><a href="/careers">Careers</a></div>
+        </div>
+        <div class="account w-[25%] justify-end flex pr-[100px]">
+            <div class="cart-btn mr-8">
+                <a href="/cart">Cart</a>
+            </div>
+            <div class="account-btn">
+                <a class="border rounded border-[#ff0e36] text-[#ff0e36] py-2 px-4" href="/sign-in">Sign In </a>
+            </div>
+        </div>
+    </nav>
+</header>

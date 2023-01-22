@@ -1,0 +1,22 @@
+<%- include("../includes/head.ejs") %>
+    </head>
+    <body>
+        <%- include("../includes/nav.ejs") %>
+        <% if (prods.length > 0) { %>
+            <% for(let i = 0; i < prods.length; i++) { %>
+                <div>
+                    <h2>
+                        <%= prods[i].title %>
+                    </h2>
+                    <p>
+                        <%= prods[i].price %>
+                    </p>
+                </div>
+            <% } %>
+        <% } else { %>
+            <div>
+                <h1>No Product Found</h1>
+            </div>
+        <% } %>
+
+<%- include("../includes/end.ejs") %>

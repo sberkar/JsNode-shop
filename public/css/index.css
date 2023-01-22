@@ -1,22 +1,8 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Quicksand", sans-serif;
+.logo-text{
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ff0e36;
 }
-li,a{
-    /* font-weight: 600; */
-}
-h1, h2, h3, h4, h5{
-    font-weight: bold;
-}
-.active{
-    font-weight: 700;
-}
-.nav-container{
-    display: flex;
-    list-style-type: none;
-}
-.nav-container li{
-    margin: 20px 5px;
+.nav-active{
+    font-weight: 500;
 }

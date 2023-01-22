@@ -1,20 +1,19 @@
 const express = require("express")
-const path = require("path")
 const bodyParser = require("body-parser")
 
-const adminRouter = require('./Router/admin')
-const shopRouter = require('./Router/shop')
-const RootDir = require('./utils/RootDir')
+const shopRoute = require("./routes/shop")
+const adminRoute = require("./routes/admin")
 
-const app = express();
+const app = express()
 
-app.use(express.static("public"))
-app.use(bodyParser.urlencoded({extended: false}))
-app.use("/admin", adminRouter)
-app.use(shopRouter)
+app.set("view engine", "ejs")
+app.set("views", "views")
 
-app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(RootDir, "Views", "not-found.html"))
-})
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+app.use("/", shopRoute)
+app.use("/admin", adminRoute)
 
-app.listen(3000)
+app.listen(8888)
