@@ -1,4 +1,5 @@
-const productModel = require("../models/product")
+const productModel = require("../models/product");
+const cartModel = require("../models/Cart")
 
 exports.getHome = (req, res, next) => {
     productModel.fetchAll(products => {
@@ -10,6 +11,17 @@ exports.getHome = (req, res, next) => {
     })
 }
 
+exports.getProduct = (req, res, next) => {
+    let productID = req.params.productID;
+    productModel.findByID(productID, product => {
+      res.render("shop/product-details", {
+        path: "/product",
+        product: product,
+        pageTitle: "Buy " + product.title + " - JsNode"
+      })  
+    })
+}
+
 exports.getProducts = (req, res, next) => {
     productModel.fetchAll(products => {
         res.render("shop/product-list", {
@@ -18,4 +30,40 @@ exports.getProducts = (req, res, next) => {
             path: "/products"
         })
     })
+}
+
+exports.getCart = (req, res, next) => {
+    cartModel.Cart.fetchAll(p => {
+        productModel.fetchAll(prods => {
+            let cartData = [];
+            prods.forEach(prod => {
+                p.products.forEach(pd => {
+                    if(prod.id == pd.id){
+                        let cartWithProductData = {product: prod, qty: pd.qty}
+                        cartData.push(cartWithProductData)
+                    }
+                })
+            })
+            let allCartData = {prods: cartData, totalAmount: p.totalAmount}
+            res.render("shop/cart", {
+                pageTitle: "Your Cart - JsNode",
+                path: "/cart",
+                allCartData: allCartData
+            })
+        })
+    })
+
+    
+}
+
+exports.postCart = (req, res, next) => {
+    let productId = parseFloat(req.body.productid);
+    let productPrice = parseFloat(req.body.productprice);
+    cartModel.Cart.Add(productId, productPrice)
+    res.redirect("/cart")
+}
+
+exports.deleteCartProduct = (req, res, next) => {
+    cartModel.Cart.deleteProduct(req.body.productid)
+    res.redirect("/cart");
 }

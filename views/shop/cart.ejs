@@ -1,0 +1,49 @@
+<%- include("../includes/head.ejs") %>
+    </head>
+    <body>
+        <%- include("../includes/nav.ejs") %>
+        <main class="flex px-[100px] mt-8">
+            <div class="w-1/2">
+            <h1 class="text-3xl">Cart</h1>
+            <% if(allCartData.prods.length) { %>
+                <% allCartData.prods.forEach(prod => {%>
+                    <div class="flex my-3 items-center">
+                        <img src="<%= prod.product.image %>" alt="<%= prod.product.title %>" class="w-[100px] rounded mr-2">
+                        <div class="w-[50%]">
+                            <h2 class="text-2xl"><a href="/product/<%= prod.product.id %>"><%= prod.product.title %></a></h2>
+                            <div class="flex"> 
+                                <p class="flex mr-2">Qty: <%= prod.qty %> <form action="/cart" method="POST">
+                                    <input type="hidden" name="productid" value="<%= prod.product.id %>">
+                                    <input type="hidden" name="productprice" value="<%= prod.product.price %>">
+                                    <button type="submit" class="border border-[#ff0e36] text-[#ff0e36] px-1">+</button>
+                                </form></p>
+                            </div>
+                            <p>Price: Rs <%= prod.product.price %></p>
+                        </div>
+                        <div class="">
+                            <form action="/cart/delete" method="post">
+                                <input type="hidden" name="productid" value="<%= prod.product.id %>">
+                                <input type="hidden" name="productprice" value="<%= prod.product.price %>">
+                                <input type="submit" class="text-[#ff0e36] text-2xl" value="X"/>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="w-full text-center mt-[100px]">
+                    <p class="my-4">No Items in Your Cart Yet</p>
+                    <a href="/" class="px-3 py-2 text-white bg-[#ff0e36] rounded">Shop Now</a>
+                </div>
+            <% } %>
+            </div>
+            <div class="w-1/2">
+                <% if(allCartData.prods.length > 0) { %>
+                <h2 class="text-2xl">Total: Rs <%= allCartData.totalAmount %></h2>
+                <form action="/checkout" method="post">
+                    <input type="submit" class="px-4 py-2 rounded text-white bg-[#ff0e36] my-4" value="Check Out"/>
+                </form>
+                <% } %>
+            </div>
+            
+        </main>
+<%- include("../includes/end.ejs") %>

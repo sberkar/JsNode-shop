@@ -1,0 +1,39 @@
+<%- include("../includes/head.ejs") %>
+    </head>
+    <body>
+        <%- include("../includes/nav.ejs") %>
+        <main class="grid px-[100px] grid-cols-5 gap-4 mt-8">
+        <% if(prods.length){ %>
+            <% for(let i = 0; i < prods.length; i++) { %>
+                <div class="border border-slate-400 rounded p-4">
+                            <div class="flex justify-center">
+                            <img class="w-auto h-[145px]" width="600" heigth="300" src="<%= prods[i].image %>" alt="Product Image">
+                        </div>
+                        <h2 class="text-xl font-bold">
+                            <a href="/product/<%= prods[i].id %>"><%= prods[i].title %></a>
+                        </h2>
+                        <span class="">
+                            ₹ <%= prods[i].price %>
+                        </span>
+                        <p class="text-[#604b58] mb-4"><%= prods[i].desc.length >= 127 ? prods[i].desc.slice(0, 127) + "..." : prods[i].desc %></p>
+                        <div class="flex">
+                            <a href="/admin/edit-product/<%= prods[i].id %>?edit=true" class="inline-block mr-4 text-white bg-[#ff0e36] rounded py-2 px-4">
+                            <button class="mr-4">Edit</button>
+                            </a>
+                            <form action="/admin/delete-product/" method="post">
+                                <input type="hidden" name="productid" value="<%= prods[i].id %>">
+                                <button type="submit" class="text-white bg-[#ff0e36] rounded py-2 px-4">Delete</button>
+                            </form>
+                        </div>
+                        </div>
+            <% } %>
+        <% } else { %>
+            <div>
+                <h1 class="text-2l">No Product Found</h1>
+                <a href="/admin/add-product">
+                    <button class="px-4 py-2 rounded bg-[#ff0e36] text-white">Add Product</button>
+                </a>
+            </div>
+        <% } %>
+        </main>
+<%- include("../includes/end.ejs") %>

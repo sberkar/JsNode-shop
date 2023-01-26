@@ -1,0 +1,33 @@
+<%- include("../includes/head.ejs") %>
+    </head>
+    <body>
+        <%- include("../includes/nav.ejs") %>
+        <% if(edit){ %>
+            <form class="flex flex-col items-center px-[100px]" action="/admin/edit-product" method="POST">
+                <h1 class="text-4xl my-8">Edit Product</h1>
+                <input type="hidden" name="productid" value="<%= productData.id %>">
+                <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Title" name="title" value="<%= productData.title %>"/>
+                <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Price" name="price" value="<%= productData.price %>"/>
+                <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Image Url" name="image" value="<%= productData.image %>">
+                <textarea class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" placeholder="Enter Product Description" name="desc" id="desc"><%= productData.desc %></textarea>
+                <div class="flex w-full justify-center">
+                    <a href="https://sberkar-fuzzy-lamp-vgjv67vqvr9hq-8888.preview.app.github.dev/admin/products" class="p-2 w-[35%] bg-[#cccccc] text-center text-white mr-1 rounded">Back to Products</a>
+
+                    <input class="p-2 w-[35%] bg-[#ff0e36] text-white rounded" type="submit" value="Edit Product">
+                </div>
+            </form>
+        <% } else { %>
+                <form class="flex flex-col items-center px-[100px]" action="/admin/add-product" method="POST">
+                <h1 class="text-4xl my-8">Add Product</h1>
+                <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Title" name="title"/>
+                <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Price" name="price"/>
+                <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Image Url" name="image">
+                <textarea class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" placeholder="Enter Product Description" name="desc" id="desc"></textarea>
+                <div class="flex w-full justify-center">
+                    <input class="p-2 w-[35%] bg-[#cccccc] text-white mr-1 rounded" type="reset" value="Cancel">
+                    <input class="p-2 w-[35%] bg-[#ff0e36] text-white rounded" type="submit" value="Add Product">
+                </div>
+            </form>
+        <% } %>
+
+<%- include("../includes/end.ejs") %>

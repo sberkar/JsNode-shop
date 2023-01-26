@@ -4,7 +4,13 @@ const productController = require("../controllers/shop")
 const router = express.Router()
 
 router.get("/", productController.getHome)
-router.get("/products", productController.getProducts)
 
+router.get("/products", productController.getProducts)
+router.get("/product/:productID", productController.getProduct)
+
+router.get("/cart", productController.getCart)
+router.post("/cart", productController.postCart)
+
+router.post("/cart/delete", productController.deleteCartProduct)
 
 module.exports = router;
