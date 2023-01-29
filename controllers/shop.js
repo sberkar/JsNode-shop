@@ -6,7 +6,8 @@ exports.getHome = (req, res, next) => {
         res.render("shop/index", {
             pageTitle: "JsNode: Shop Without Limit",
             prods: products,
-            path: "/"
+            path: "/",
+            user: req.User.email
         })
     })
 }

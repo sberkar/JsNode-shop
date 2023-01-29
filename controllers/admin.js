@@ -4,7 +4,7 @@ exports.getProducts = (req, res, next) => {
     productModel.fetchAll(products => {
         res.render("admin/product-list", {
             pageTitle: "All Products - Admin - JsNode",
-            path: "/admin/products",
+            path: "/",
             prods: products
         })
     })
@@ -20,7 +20,7 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
     let productData = new productModel(req.body.title, req.body.price, req.body.image, req.body.desc)
     productData.save()
-    res.redirect("/admin/edit-product")
+    res.redirect("/admin/add-product")
 }
 
 exports.getEditProduct = (req, res, next) => {
@@ -28,7 +28,7 @@ exports.getEditProduct = (req, res, next) => {
     let productID = req.params.productid;
     if(!editMode) return res.redirect("/")
     productModel.findByID(productID, product => {
-        if(product.id == undefined){
+        if(product._id == undefined){
             return res.redirect("/")
         }
         res.render("admin/edit-product", {
@@ -41,12 +41,16 @@ exports.getEditProduct = (req, res, next) => {
 }
 
 exports.postEditProduct = (req, res, next) => {
-    productModel.editProduct(req.body);
-    res.redirect("/admin/products")
+    productModel.editProduct(req.body).then(res => {
+        res.redirect("/admin/products")
+    }).catch(err => {
+        console.log(err)
+    });
 }
 
 exports.postDeleteProduct = (req, res, next) => {
     let productid = req.body.productid;
-    productModel.deleteProduct(productid);
-    res.redirect("/admin/products")
+    productModel.deleteProduct(productid).then(() => {
+        res.redirect('/admin/products')
+    }).catch(err => console.log(err))
 }

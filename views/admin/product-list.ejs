@@ -17,11 +17,11 @@
                         </span>
                         <p class="text-[#604b58] mb-4"><%= prods[i].desc.length >= 127 ? prods[i].desc.slice(0, 127) + "..." : prods[i].desc %></p>
                         <div class="flex">
-                            <a href="/admin/edit-product/<%= prods[i].id %>?edit=true" class="inline-block mr-4 text-white bg-[#ff0e36] rounded py-2 px-4">
+                            <a href="/admin/edit-product/<%= prods[i]._id.toString() %>?edit=true" class="inline-block mr-4 text-white bg-[#ff0e36] rounded py-2 px-4">
                             <button class="mr-4">Edit</button>
                             </a>
                             <form action="/admin/delete-product/" method="post">
-                                <input type="hidden" name="productid" value="<%= prods[i].id %>">
+                                <input type="hidden" name="productid" value="<%= prods[i]._id.toString() %>">
                                 <button type="submit" class="text-white bg-[#ff0e36] rounded py-2 px-4">Delete</button>
                             </form>
                         </div>
