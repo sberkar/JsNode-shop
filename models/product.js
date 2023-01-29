@@ -20,11 +20,9 @@ class Product{
             console.log(err)
         })
     }
-    static findByID(id, cb) {
+    static findByID(id) {
         const db = getDb()
-        return db.collection('products').find({_id: new mongodb.ObjectId(id)}).next().then(res => {
-            cb(res)
-        }).catch(err => console.log(err))
+        return db.collection('products').find({_id: new mongodb.ObjectId(id)}).next();
     }
     static editProduct(body) {
         let objectForUpdate = {$set: {

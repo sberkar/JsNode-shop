@@ -1,5 +1,6 @@
 const productModel = require("../models/product");
-const cartModel = require("../models/Cart")
+const cartModel = require("../models/Cart");
+const User = require("../models/User");
 
 exports.getHome = (req, res, next) => {
     productModel.fetchAll(products => {
@@ -58,10 +59,10 @@ exports.getCart = (req, res, next) => {
 }
 
 exports.postCart = (req, res, next) => {
-    let productId = parseFloat(req.body.productid);
-    let productPrice = parseFloat(req.body.productprice);
-    cartModel.Cart.Add(productId, productPrice)
-    res.redirect("/cart")
+    let productid = req.body.productid;
+    let uid = req.User._id.toString();
+    User.addTocart(productid, uid)
+    res.redirect("/")
 }
 
 exports.deleteCartProduct = (req, res, next) => {
