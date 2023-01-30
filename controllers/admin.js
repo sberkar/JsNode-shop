@@ -1,7 +1,7 @@
-const productModel = require("../models/product")
+const Product = require("../models/Product")
 
 exports.getProducts = (req, res, next) => {
-    productModel.fetchAll(products => {
+    Product.find().then(products => {
         res.render("admin/product-list", {
             pageTitle: "All Products - Admin - JsNode",
             path: "/",
@@ -18,30 +18,46 @@ exports.getAddProduct = (req, res, next) => {
 }
 
 exports.postAddProduct = (req, res, next) => {
-    let productData = new productModel(req.body.title, req.body.price, req.body.image, req.body.desc)
-    productData.save()
-    res.redirect("/admin/add-product")
+    let productData = new Product({
+        title: req.body.title,
+        price: req.body.price,
+        image: req.body.image,
+        desc: req.body.desc
+    })
+    productData.save().then(result => {
+        res.redirect("/admin/add-product")
+    }).catch(err => {
+        console.log(err)
+    })
 }
 
 exports.getEditProduct = (req, res, next) => {
     let editMode = req.query.edit;
     let productID = req.params.productid;
     if(!editMode) return res.redirect("/")
-    productModel.findByID(productID, product => {
-        if(product._id == undefined){
-            return res.redirect("/")
-        }
+    Product.findById({_id: productID}).then(product => {
+        if(!product) return res.redirect("/admin/products")
         res.render("admin/edit-product", {
-            edit: editMode,
+            pageTitle: "Edit - " + product.title + " - JsNode",
+            path: "/admin/edit",
             productData: product,
-            pageTitle: "edit - " + product.title + " - JsNode",
-            path: "/admin/add-product"
+            edit: editMode
         })
+    }).catch(err => {
+        return res.redirect("/admin/products")
     })
+    
 }
 
 exports.postEditProduct = (req, res, next) => {
-    productModel.editProduct(req.body).then(res => {
+    Product.findById({_id: req.body.productid}).then(product => {
+        product.title = req.body.title
+        product.price = req.body.price
+        product.image = req.body.image
+        product.desc = req.body.desc
+        return product.save()
+    })
+    .then(() => {
         res.redirect("/admin/products")
     }).catch(err => {
         console.log(err)
@@ -50,7 +66,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     let productid = req.body.productid;
-    productModel.deleteProduct(productid).then(() => {
+    Product.deleteOne({_id: productid}).then(() => {
         res.redirect('/admin/products')
     }).catch(err => console.log(err))
 }

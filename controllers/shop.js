@@ -1,21 +1,19 @@
-const productModel = require("../models/product");
-const cartModel = require("../models/Cart");
-const User = require("../models/User");
+const Product = require("../models/Product");
 
 exports.getHome = (req, res, next) => {
-    productModel.fetchAll(products => {
+    Product.find().then(products => {
         res.render("shop/index", {
             pageTitle: "JsNode: Shop Without Limit",
             prods: products,
             path: "/",
-            user: req.User.email
         })
     })
 }
 
 exports.getProduct = (req, res, next) => {
     let productID = req.params.productID;
-    productModel.findByID(productID, product => {
+    Product.findById({_id: productID}).then( product => {
+        if(!product) return res.redirect("/")
       res.render("shop/product-details", {
         path: "/product",
         product: product,
@@ -35,37 +33,45 @@ exports.getProducts = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    cartModel.Cart.fetchAll(p => {
-        productModel.fetchAll(prods => {
-            let cartData = [];
-            prods.forEach(prod => {
-                p.products.forEach(pd => {
-                    if(prod.id == pd.id){
-                        let cartWithProductData = {product: prod, qty: pd.qty}
-                        cartData.push(cartWithProductData)
-                    }
-                })
-            })
-            let allCartData = {prods: cartData, totalAmount: p.totalAmount}
-            res.render("shop/cart", {
-                pageTitle: "Your Cart - JsNode",
-                path: "/cart",
-                allCartData: allCartData
-            })
+    User.fetchCart(req.User._id.toString(), cart => {
+        res.render("shop/cart", {
+            pageTitle: "Your Cart - JsNode",
+            path: "/cart",
+            allCartData: cart
         })
-    })
-
-    
+    }) 
 }
 
 exports.postCart = (req, res, next) => {
     let productid = req.body.productid;
     let uid = req.User._id.toString();
     User.addTocart(productid, uid)
-    res.redirect("/")
+    res.redirect("/cart")
 }
 
 exports.deleteCartProduct = (req, res, next) => {
-    cartModel.Cart.deleteProduct(req.body.productid)
+    User.deleteProductFromCart(req.User._id.toString(), req.body.productid)
     res.redirect("/cart");
+}
+exports.getOrders = (req, res, next) => {
+    getOrders(req.User._id.toString()).then(orders => {
+        res.render('shop/orders', {
+            pageTitle: "Your Orders - JsNode",
+            path: "/orders",
+            orders: orders
+        })
+    })
+}
+
+exports.postOrders = (req, res, next) => {
+    addOrders(req.User._id.toString()).then(() => {
+        find(req.User._id.toString()).then(user => {
+            const db = getDb()
+            return db.collection('users').updateOne({_id: user._id}, {$set: {
+                cart: []
+            }}).then(() => {
+                res.redirect('/orders')
+            })
+        })
+    })
 }

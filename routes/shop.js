@@ -13,4 +13,7 @@ router.post("/cart", productController.postCart)
 
 router.post("/cart/delete", productController.deleteCartProduct)
 
+router.get("/orders", productController.getOrders)
+router.post("/orders", productController.postOrders)
+
 module.exports = router;
