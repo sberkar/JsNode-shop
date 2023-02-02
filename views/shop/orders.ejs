@@ -6,14 +6,14 @@
             <h1 class="text-3xl mb-4">Orders</h1>
             <% if(orders.length){ %>
                 
-                <% for(let i = 0; i < orders.length; i++) { %>
+                <% for(let i = orders.length - 1; i >= 0; i--) { %>
                     <h3 class="bg-slate-100 p-1 text-slate-600 my-3 rounded text-md ">Order #<%= orders[i]._id.toString() %></h3>
                     <% for(let j = 0; j < orders[i].items.length; j++){ %>
                         <div class="flex">
-                            <img class="w-[150px]" src="<%= orders[i].items[j].image %>" alt="<%= orders[i].items[j].title %>">
+                            <img class="w-[150px]" src="<%= orders[i].items[j].prodId.image %>" alt="<%= orders[i].items[j].title %>">
                             <div>
-                                <h3 class="text-2xl"><%= orders[i].items[j].title %> (<%= orders[i].items[j].qty %>)</h3>
-                                <p>Rs <%= orders[i].items[j].price %></p>
+                                <h3 class="text-2xl"><%= orders[i].items[j].prodId.title %> (<%= orders[i].items[j].qty %>)</h3>
+                                <p>Rs <%= orders[i].items[j].prodId.price %></p>
                                 <p><b>Delivered</b></p>
                             </div>
                         </div> 

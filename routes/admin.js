@@ -1,18 +1,19 @@
 const express = require("express")
 
 const adminController = require("../controllers/admin")
+const Route_Protector = require("../middlewares/route_protector")
 
 const router = express.Router();
 
-router.get("/products", adminController.getProducts)
+router.get("/products", Route_Protector, adminController.getProducts)
 
-router.get("/add-product", adminController.getAddProduct)
-router.post("/add-product", adminController.postAddProduct)
+router.get("/add-product", Route_Protector, adminController.getAddProduct)
+router.post("/add-product", Route_Protector, adminController.postAddProduct)
 
-router.get("/edit-product/:productid", adminController.getEditProduct)
-router.post("/edit-product", adminController.postEditProduct)
+router.get("/edit-product/:productid", Route_Protector, adminController.getEditProduct)
+router.post("/edit-product", Route_Protector, adminController.postEditProduct)
 
 
-router.post("/delete-product", adminController.postDeleteProduct)
+router.post("/delete-product", Route_Protector, adminController.postDeleteProduct)
 
 module.exports = router;

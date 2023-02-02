@@ -11,11 +11,16 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        required: true
+    },
     cart: {
         type: [{
             prodId: {
                 type: mongoose.Types.ObjectId,
-                required: true
+                required: true,
+                ref: "Product"
             },
             qty: {
                 type: Number,
@@ -27,14 +32,34 @@ const UserSchema = new Schema({
 })
 
 UserSchema.methods.AddToCart = function(product){
-    let productInCartIndex = this.cart.findIndex(pic => pic.prodId == product._id)
+    let productInCartIndex = this.cart.findIndex(pic => pic.prodId.toString() == product._id.toString())
 
     let cart = [...this.cart]
-    let newqty;
+    let newqty = 1;
+    let updatedProduct = {}
     
     if(productInCartIndex >= 0){
-
+        updatedProduct.prodId = cart[productInCartIndex].prodId
+        updatedProduct.qty = cart[productInCartIndex].qty + +newqty;
+        cart[productInCartIndex] = updatedProduct;
+    }else{
+        updatedProduct.qty = newqty;
+        updatedProduct.prodId = product._id.toString()
+        cart.push(updatedProduct)
     }
+    this.cart = cart;
+    return this.save()
+}
+
+UserSchema.methods.removeFromCart = function(pid){
+    let itemRemovedCart = this.cart.filter(cartItem => cartItem.prodId.toString() != pid);
+    this.cart = itemRemovedCart;
+    return this.save()
+}
+
+UserSchema.methods.clearCart = function(){
+    this.cart = []
+    return this.save()
 }
 
 module.exports = mongoose.model("User", UserSchema)

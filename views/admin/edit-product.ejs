@@ -4,6 +4,7 @@
         <%- include("../includes/nav.ejs") %>
         <% if(edit){ %>
             <form class="flex flex-col items-center px-[100px]" action="/admin/edit-product" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <h1 class="text-4xl my-8">Edit Product</h1>
                 <input type="hidden" name="productid" value="<%= productData._id %>">
                 <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Title" name="title" value="<%= productData.title %>"/>
@@ -18,6 +19,7 @@
             </form>
         <% } else { %>
                 <form class="flex flex-col items-center px-[100px]" action="/admin/add-product" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <h1 class="text-4xl my-8">Add Product</h1>
                 <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Title" name="title"/>
                 <input class="border border-slate-400 outline-none w-[70%] p-2 rounded mb-2" type="text" placeholder="Enter Product Price" name="price"/>

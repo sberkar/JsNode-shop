@@ -1,0 +1,27 @@
+<%- include("../../includes/head.ejs") %>
+    </head>
+    <body>
+        <%- include("../../includes/nav.ejs") %>
+        <main class="px-[100px] mt-8 flex flex-col items-center w-full">
+            <form method="post" class="w-[40%]" action="/user/login">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <h1 class="text-3xl font-semi text-center">Log In</h1>
+                <% if(errorMsg.length > 0) { %>
+                    <p class="bg-[#ff0000] my-4 rounded-lg text-white p-2"><%= errorMsg %></p>
+                <% } %>
+                <div class="my-4 h-[50px] w-full">
+                    <input class="w-full h-full inline-block rounded border border-slate-300 p-2" type="email" name="email" id="email" placeholder="Enter Your Email" />
+                </div>
+                <div class="my-4 h-[50px] w-full">
+                    <input class="w-full h-full inline-block rounded border border-slate-300 p-2" type="password" placeholder="Enter Your Password" name="password" id="password" />
+                </div>
+                <div class="my-4 h-[50px] w-full">
+                    <input class="w-full h-full inline-block rounded border bg-[#ff0e36] text-[#fff] text-xl p-2" type="submit" value="Login">
+                </div>
+                <p class="text-center">Don't Have Account Yet? <a href="/signup">Sign Up</a>
+                
+            </form>
+
+        </main>
+
+<%- include("../../includes/end.ejs") %>

@@ -9,12 +9,29 @@
             <div class="<%= path === '/careers'?'nav-active':'' %>""><a href="/careers">Careers</a></div>
         </div>
         <div class="account w-[25%] justify-end flex pr-[100px]">
-            <div class="cart-btn mr-8">
-                <a href="/cart">Cart</a>
-            </div>
-            <div class="account-btn">
-                <a class="border rounded border-[#ff0e36] text-[#ff0e36] py-2 px-4" href="/sign-in">Sign In </a>
-            </div>
+            <% if(session.isLoggedIn) { %>
+                <div class="cart-btn mr-8">
+                    <a href="/orders">Orders</a>
+                </div>
+                <div class="cart-btn mr-8">
+                    <a href="/cart">Cart</a>
+                </div>
+                <div>
+                    <p>
+                        <form action="/user/logout" method="post">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button type="submit">Logout</button>
+                        </form>
+                    </p>
+                </div>
+            <% } else { %>
+                <div class="cart-btn mr-8">
+                    <a href="/user/signup">Sign Up</a>
+                </div>
+                <div class="account-btn">
+                    <a class="border rounded border-[#ff0e36] text-[#ff0e36] py-2 px-4" href="/user/login">Log In </a>
+                </div>
+            <% } %>
         </div>
     </nav>
 </header>
