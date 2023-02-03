@@ -1,5 +1,7 @@
 const User = require("../models/User")
 const bcrypt = require("bcryptjs")
+const nodeMailer = require("nodemailer");
+const sendGridTransport = require("nodemailer-sendgrid-transport")
 
 exports.getAccount = (req, res, next) => {
     if(req.session){
