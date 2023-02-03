@@ -3,7 +3,7 @@ const User = require("../models/User");
 const Order = require("../models/Orders")
 
 exports.getHome = (req, res, next) => {
-    Product.find().then(products => {
+    Product.find().limit(5).then(products => {
         res.render("shop/index", {
             pageTitle: "JsNode: Shop Without Limit",
             prods: products,
